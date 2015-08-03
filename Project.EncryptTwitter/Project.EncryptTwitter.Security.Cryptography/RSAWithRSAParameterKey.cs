@@ -1,51 +1,64 @@
 ﻿using System.Security.Cryptography;
 
-namespace CryptographyInDotNet
+namespace Project.EncryptTwitter.Security.Cryptography
 {
-    public class RSAWithRSAParameterKey
-    {
-        private RSAParameters _publicKey;
-        private RSAParameters _privateKey;
+	public class RSAWithRSAParameterKey
+	{
+		const int KEY_SIZE = 2048;
 
-        public void AssignNewKey()
-        {
-            using (var rsa = new RSACryptoServiceProvider(2048))
-            {                
-                rsa.PersistKeyInCsp = false;               
-                _publicKey = rsa.ExportParameters(false);
-                _privateKey = rsa.ExportParameters(true);                
-            }
-        }
+		private RSAParameters _publicKey;
+		private RSAParameters _privateKey;
 
-        public byte[] EncryptData(byte[] dataToEncrypt)
-        {
-            byte[] cipherbytes;
+		public void ImportKeys(string xmlString = "")
+		{
+			using (var rsa = new RSACryptoServiceProvider(KEY_SIZE))
+			{
+				if (!string.IsNullOrWhiteSpace(xmlString))
+					rsa.FromXmlString(xmlString);
 
-            using (var rsa = new RSACryptoServiceProvider(2048))
-            {
-                rsa.PersistKeyInCsp = false;                
-                rsa.ImportParameters(_publicKey);
+				rsa.PersistKeyInCsp = false;
 
+				_publicKey = rsa.ExportParameters(false);
+				_privateKey = rsa.ExportParameters(true);
+			}
+		}
+		public string ExportKeys()
+		{
+			using (var rsa = new RSACryptoServiceProvider(KEY_SIZE))
+			{
+				rsa.ImportParameters(_privateKey);
 
-                cipherbytes = rsa.Encrypt(dataToEncrypt, false);
-            }
+				const bool includePrivateParameters = true;
+				return rsa.ToXmlString(includePrivateParameters);
+			}
+		}
 
-            return cipherbytes;
-        }
+		public byte[] EncryptData(byte[] dataToEncrypt)
+		{
+			byte[] cipherbytes;
+			using (var rsa = new RSACryptoServiceProvider(KEY_SIZE))
+			{
+				rsa.PersistKeyInCsp = false;
+				rsa.ImportParameters(_publicKey);
 
-        public byte[] DecryptData(byte[] dataToEncrypt)
-        {
-            byte[] plain;
+				cipherbytes = rsa.Encrypt(dataToEncrypt, false);
+			}
 
-            using (var rsa = new RSACryptoServiceProvider(2048))
-            {
-                rsa.PersistKeyInCsp = false;
-                                
-                rsa.ImportParameters(_privateKey);
-                plain = rsa.Decrypt(dataToEncrypt, false);
-            }
+			return cipherbytes;
+		}
 
-            return plain;
-        }
-    }
+		public byte[] DecryptData(byte[] dataToEncrypt)
+		{
+			byte[] plain;
+			using (var rsa = new RSACryptoServiceProvider(KEY_SIZE))
+			{
+				rsa.PersistKeyInCsp = false;
+				rsa.ImportParameters(_privateKey);
+
+				plain = rsa.Decrypt(dataToEncrypt, false);
+			}
+
+			return plain;
+		}
+	}
 }

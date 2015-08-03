@@ -6,7 +6,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using CryptographyInDotNet;
 
 namespace Project.EncryptTwitter.Security.Cryptography.Demo
 {
@@ -25,7 +24,7 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 			var hybrid = new HybridEncryption();
 
 			var rsaParams = new RSAWithRSAParameterKey();
-			rsaParams.AssignNewKey();
+			rsaParams.ImportKeys();
 
 			var digitalSignature = new DigitalSignature();
 			digitalSignature.AssignNewKey();
