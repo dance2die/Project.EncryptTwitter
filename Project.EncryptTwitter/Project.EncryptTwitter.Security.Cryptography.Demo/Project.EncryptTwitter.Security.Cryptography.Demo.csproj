@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1BB4F406-DCAC-4001-B1D0-09452890CBB5}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{8316C676-9AFC-47FF-96B4-00C8E82828BB}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Project.EncryptTwitter.Security.Cryptography</RootNamespace>
-    <AssemblyName>Project.EncryptTwitter.Security.Cryptography</AssemblyName>
+    <RootNamespace>Project.EncryptTwitter.Security.Cryptography.Demo</RootNamespace>
+    <AssemblyName>Project.EncryptTwitter.Security.Cryptography.Demo</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,12 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AesEncryption.cs" />
-    <Compile Include="DigitalSignature.cs" />
-    <Compile Include="EncryptedPacket.cs" />
-    <Compile Include="HybridEncryption.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RSAWithRSAParameterKey.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Project.EncryptTwitter.Security.Cryptography\Project.EncryptTwitter.Security.Cryptography.csproj">
+      <Project>{1bb4f406-dcac-4001-b1d0-09452890cbb5}</Project>
+      <Name>Project.EncryptTwitter.Security.Cryptography</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
