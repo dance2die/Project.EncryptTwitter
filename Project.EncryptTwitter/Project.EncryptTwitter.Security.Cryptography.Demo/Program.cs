@@ -17,7 +17,8 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 			//const string original = "Very secret and important information that can not fall into the wrong hands.";
 			//string original = new String('0', 140);
 			//string original = "abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890";
-			string original = "abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890";
+			//string original = "abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890";
+			string original = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non dictum diam. Donec feugiat libero sed arcu interdum consectetur vitae amet.";
 
 			var hybrid = new HybridEncryption();
 
@@ -33,6 +34,9 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 
 			try
 			{
+				byte[] compressedBytes = Compress(Encoding.UTF8.GetBytes(original));
+				byte[] decompressedBytes = Decompress(compressedBytes);
+
 				var encryptedBlock = hybrid.EncryptData(
 					Encoding.UTF8.GetBytes(original), rsaParams, digitalSignature);
 
@@ -45,6 +49,10 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 
 				Console.WriteLine("Original Message = " + original);
 				Console.WriteLine("Original Message Length: {0}", original.Length);
+				Console.WriteLine("Compressed Original Message = " + Convert.ToBase64String(compressedBytes));
+				Console.WriteLine("Compressed Original Message Length: {0}", compressedBytes.Length);
+				Console.WriteLine("DeCompressed Original Message = " + Convert.ToBase64String(decompressedBytes));
+				Console.WriteLine("DeCompressed Original Message Length: {0}", decompressedBytes.Length);
 				Console.WriteLine("Encrypted Data: {0}", Convert.ToBase64String(encryptedBlock.EncryptedData));
 				Console.WriteLine("Encrypted Data Size: {0}", encryptedBlock.EncryptedData.Length);
 				Console.WriteLine("GZipped Encrypted Data: {0}", Convert.ToBase64String(gzippedBytes));
