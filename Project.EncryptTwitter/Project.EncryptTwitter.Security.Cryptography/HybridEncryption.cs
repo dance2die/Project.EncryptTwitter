@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace CryptographyInDotNet
+namespace Project.EncryptTwitter.Security.Cryptography
 {
 	public class HybridEncryption
 	{

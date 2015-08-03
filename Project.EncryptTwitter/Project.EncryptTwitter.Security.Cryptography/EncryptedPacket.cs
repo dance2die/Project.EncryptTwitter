@@ -1,4 +1,4 @@
-﻿namespace CryptographyInDotNet
+﻿namespace Project.EncryptTwitter.Security.Cryptography
 {
     public class EncryptedPacket
     {
