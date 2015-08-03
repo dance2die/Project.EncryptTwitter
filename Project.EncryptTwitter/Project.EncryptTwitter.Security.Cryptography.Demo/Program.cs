@@ -15,10 +15,11 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 		static void Main(string[] args)
 		{
 			//const string original = "Very secret and important information that can not fall into the wrong hands.";
-			//string original = new String('0', 140);
+			//string original = new String('0', 127);
+			string original = "abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrs";
 			//string original = "abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890";
-			//string original = "abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890";
-			string original = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non dictum diam. Donec feugiat libero sed arcu interdum consectetur vitae amet.";
+			//string original = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non dictum diam. Donec feugiat libero sed arcu interdum consectetur vitae amet.";
+			//string original = @"?=??Y@쳘?{?? &긳 ? v ? ";
 
 			var hybrid = new HybridEncryption();
 
