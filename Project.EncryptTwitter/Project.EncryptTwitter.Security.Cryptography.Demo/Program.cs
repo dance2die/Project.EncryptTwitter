@@ -36,11 +36,13 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 
 			try
 			{
-				byte[] compressedBytes = Compress(Encoding.UTF8.GetBytes(original));
+				var originalData = Encoding.UTF8.GetBytes(original);
+
+				byte[] compressedBytes = Compress(originalData);
 				byte[] decompressedBytes = Decompress(compressedBytes);
 
 				var encryptedBlock = hybrid.EncryptData(
-					Encoding.UTF8.GetBytes(original), rsaParams, digitalSignature);
+					originalData, rsaParams, digitalSignature);
 
 				var decrpyted = hybrid.DecryptData(encryptedBlock, rsaParams, digitalSignature);
 
