@@ -12,7 +12,8 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 	{
 		static void Main(string[] args)
 		{
-			const string original = "Very secret and important information that can not fall into the wrong hands.";
+			//const string original = "Very secret and important information that can not fall into the wrong hands.";
+			string original = new String('0', 140);
 
 			var hybrid = new HybridEncryption();
 
@@ -34,6 +35,9 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 				var decrpyted = hybrid.DecryptData(encryptedBlock, rsaParams, digitalSignature);
 
 				Console.WriteLine("Original Message = " + original);
+				Console.WriteLine("Original Message Length: {0}", original.Length);
+				Console.WriteLine("Encrypted Data: {0}", Convert.ToBase64String(encryptedBlock.EncryptedData));
+				Console.WriteLine("Encrypted Data Size: {0}", encryptedBlock.EncryptedData.Length);
 				Console.WriteLine();
 				Console.WriteLine("Message After Decryption = " + Encoding.UTF8.GetString(decrpyted));
 			}
