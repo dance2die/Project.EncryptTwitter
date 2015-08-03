@@ -86,6 +86,9 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 			}
 		}
 
+		/// <remarks>
+		/// http://madskristensen.net/post/compress-and-decompress-strings-in-c
+		/// </remarks>
 		public static byte[] Compress(byte[] buffer)
 		{
 			MemoryStream ms = new MemoryStream();
@@ -107,6 +110,9 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 			return gzBuffer;
 		}
 
+		/// <remarks>
+		/// http://madskristensen.net/post/compress-and-decompress-strings-in-c
+		/// </remarks>
 		public static byte[] Decompress(byte[] gzBuffer)
 		{
 			using (MemoryStream ms = new MemoryStream())
