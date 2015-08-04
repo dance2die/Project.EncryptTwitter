@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Project.EncryptTwitter.Security.Cryptography.Demo
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main()
 		{
 			//const string original = "Very secret and important information that can not fall into the wrong hands.";
 			//string original = new String('0', 127);
@@ -100,7 +98,7 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 		/// <remarks>
 		/// http://madskristensen.net/post/compress-and-decompress-strings-in-c
 		/// </remarks>
-		public static byte[] Compress(byte[] buffer)
+		private static byte[] Compress(byte[] buffer)
 		{
 			MemoryStream ms = new MemoryStream();
 			using (GZipStream zip = new GZipStream(ms, CompressionMode.Compress, true))
@@ -109,14 +107,13 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 			}
 
 			ms.Position = 0;
-			MemoryStream outStream = new MemoryStream();
 
 			byte[] compressed = new byte[ms.Length];
 			ms.Read(compressed, 0, compressed.Length);
 
 			byte[] gzBuffer = new byte[compressed.Length + 4];
-			System.Buffer.BlockCopy(compressed, 0, gzBuffer, 4, compressed.Length);
-			System.Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, gzBuffer, 0, 4);
+			Buffer.BlockCopy(compressed, 0, gzBuffer, 4, compressed.Length);
+			Buffer.BlockCopy(BitConverter.GetBytes(buffer.Length), 0, gzBuffer, 0, 4);
 			//return Convert.ToBase64String(gzBuffer);
 			return gzBuffer;
 		}
@@ -124,7 +121,7 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 		/// <remarks>
 		/// http://madskristensen.net/post/compress-and-decompress-strings-in-c
 		/// </remarks>
-		public static byte[] Decompress(byte[] gzBuffer)
+		private static byte[] Decompress(byte[] gzBuffer)
 		{
 			using (MemoryStream ms = new MemoryStream())
 			{
@@ -147,7 +144,7 @@ namespace Project.EncryptTwitter.Security.Cryptography.Demo
 		/// <remarks>
 		/// http://stackoverflow.com/a/1344242/4035
 		/// </remarks>
-		public static string GenerateRandomText()
+		private static string GenerateRandomText()
 		{
 			var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 			var random = new Random();
