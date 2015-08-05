@@ -50,16 +50,17 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 						"&", Uri.EscapeDataString(oauth_token_secret));
 
 			string oauth_signature;
-			using (HMACSHA1 hasher = new HMACSHA1(ASCIIEncoding.ASCII.GetBytes(compositeKey)))
+			using (HMACSHA1 hasher = new HMACSHA1(Encoding.ASCII.GetBytes(compositeKey)))
 			{
 				oauth_signature = Convert.ToBase64String(
-					hasher.ComputeHash(ASCIIEncoding.ASCII.GetBytes(baseString)));
+					hasher.ComputeHash(Encoding.ASCII.GetBytes(baseString)));
 			}
 
-			var headerFormat = "OAuth oauth_nonce=\"{0}\", oauth_signature_method=\"{1}\", " +
-				   "oauth_timestamp=\"{2}\", oauth_consumer_key=\"{3}\", " +
-				   "oauth_token=\"{4}\", oauth_signature=\"{5}\", " +
-				   "oauth_version=\"{6}\"";
+			var headerFormat =
+				"OAuth oauth_nonce=\"{0}\", oauth_signature_method=\"{1}\", " +
+				"oauth_timestamp=\"{2}\", oauth_consumer_key=\"{3}\", " +
+				"oauth_token=\"{4}\", oauth_signature=\"{5}\", " +
+				"oauth_version=\"{6}\"";
 
 			var authHeader = string.Format(headerFormat,
 									Uri.EscapeDataString(oauth_nonce),
@@ -81,9 +82,10 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 			request.ContentType = "application/x-www-form-urlencoded";
 			using (Stream stream = request.GetRequestStream())
 			{
-				byte[] content = ASCIIEncoding.ASCII.GetBytes(postBody);
+				byte[] content = Encoding.ASCII.GetBytes(postBody);
 				stream.Write(content, 0, content.Length);
 			}
+
 			WebResponse response = request.GetResponse();
 			using (var reader = new StreamReader(response.GetResponseStream()))
 			{
