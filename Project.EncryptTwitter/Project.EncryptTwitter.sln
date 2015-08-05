@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.EncryptTwitter.Secu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.EncryptTwitter.Security.Cryptography.Demo", "Project.EncryptTwitter.Security.Cryptography.Demo\Project.EncryptTwitter.Security.Cryptography.Demo.csproj", "{8316C676-9AFC-47FF-96B4-00C8E82828BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.EncryptTwitter.Security.Auth", "Project.EncryptTwitter.Security.Auth\Project.EncryptTwitter.Security.Auth.csproj", "{C7D6E012-02DE-4EF6-954A-C24D787BBC81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8316C676-9AFC-47FF-96B4-00C8E82828BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8316C676-9AFC-47FF-96B4-00C8E82828BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8316C676-9AFC-47FF-96B4-00C8E82828BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7D6E012-02DE-4EF6-954A-C24D787BBC81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7D6E012-02DE-4EF6-954A-C24D787BBC81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7D6E012-02DE-4EF6-954A-C24D787BBC81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7D6E012-02DE-4EF6-954A-C24D787BBC81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
