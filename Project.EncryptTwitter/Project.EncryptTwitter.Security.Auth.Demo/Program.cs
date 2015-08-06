@@ -32,7 +32,8 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 
 			// Step 3 - Exchange the Request Token for an Access Token
 			string verifier = "123456"; // <-- This is input into your application by your user
-			OAuthAccessToken access = service.GetAccessToken(requestToken, verifier);
+			//OAuthAccessToken access = service.GetAccessToken(requestToken, verifier);
+			OAuthAccessToken access = service.GetAccessToken(requestToken);
 
 			// Step 4 - User authenticates using the Access Token
 			service.AuthenticateWith(access.Token, access.TokenSecret);
