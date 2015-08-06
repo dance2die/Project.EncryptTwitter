@@ -1,14 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using TweetSharp;
 
 namespace Project.EncryptTwitter.Security.Auth.Demo
 {
 	public class Program
 	{
 		public static void Main(string[] args)
+		{
+			//Test1();
+
+			TestUsingTweetSharp();
+		}
+
+		private static void TestUsingTweetSharp()
+		{
+			// Pass your credentials to the service
+			TwitterService service = new TwitterService(OAuthProperties.ConsumerKey, OAuthProperties.ConsumerKeySecret);
+
+			// Step 1 - Retrieve an OAuth Request Token
+			OAuthRequestToken requestToken = service.GetRequestToken();
+
+			// Step 2 - Redirect to the OAuth Authorization URL
+			Uri uri = service.GetAuthorizationUri(requestToken);
+			Process.Start(uri.ToString());
+
+			// Step 3 - Exchange the Request Token for an Access Token
+			string verifier = "123456"; // <-- This is input into your application by your user
+			OAuthAccessToken access = service.GetAccessToken(requestToken, verifier);
+
+			// Step 4 - User authenticates using the Access Token
+			service.AuthenticateWith(access.Token, access.TokenSecret);
+			//IEnumerable<TwitterStatus> mentions = service.ListTweetsMentioningMe(new ListTweetsMentioningMeOptions {Count = 10});
+			TwitterStatus twitterStatus = service.SendTweet(new SendTweetOptions {Status = "Hello #TweetSharp"});
+		}
+
+		private static void Test1()
 		{
 			// Authenticate to Twitter using OAuth
 			/// http://www.codeproject.com/Articles/247336/Twitter-OAuth-authentication-using-Net
@@ -33,10 +65,10 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 
 		private static HttpWebRequest GetTwitterWebRequest(string status)
 		{
-			var oauth_token = "14905072-vEtN8M1WvcZ1FvPOWzfoKQLxya4TqIIUCRr7YbFKT";
-			var oauth_token_secret = Environment.GetEnvironmentVariable("oauth_token_secret", EnvironmentVariableTarget.User);
-			var oauth_consumer_key = "fiXvFGNTBv8z9pb0zcuvFV5jO";
-			var oauth_consumer_secret = Environment.GetEnvironmentVariable("oauth_consumer_secret", EnvironmentVariableTarget.User);
+			var oauth_token = OAuthProperties.Token;
+			var oauth_token_secret = OAuthProperties.TokenSecrete;
+			var oauth_consumer_key = OAuthProperties.ConsumerKey;
+			var oauth_consumer_secret = OAuthProperties.ConsumerKeySecret;
 
 			var oauth_version = "1.0";
 			var oauth_signature_method = "HMAC-SHA1";
@@ -44,13 +76,13 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 				new ASCIIEncoding().GetBytes(
 					DateTime.Now.Ticks.ToString()));
 			var timeSpan = DateTime.UtcNow
-			               - new DateTime(1970, 1, 1, 0, 0, 0, 0,
-				               DateTimeKind.Utc);
+						   - new DateTime(1970, 1, 1, 0, 0, 0, 0,
+							   DateTimeKind.Utc);
 			var oauth_timestamp = Convert.ToInt64(timeSpan.TotalSeconds).ToString();
 			var resource_url = "https://api.twitter.com/1.1/statuses/update.json";
 
 			var baseFormat = "oauth_consumer_key={0}&oauth_nonce={1}&oauth_signature_method={2}" +
-			                 "&oauth_timestamp={3}&oauth_token={4}&oauth_version={5}&status={6}";
+							 "&oauth_timestamp={3}&oauth_token={4}&oauth_version={5}&status={6}";
 
 			var baseString = string.Format(baseFormat,
 				oauth_consumer_key,
@@ -91,11 +123,11 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 				Uri.EscapeDataString(oauth_version)
 				);
 
-			
+
 
 			ServicePointManager.Expect100Continue = false;
 
-			var request = (HttpWebRequest) WebRequest.Create(resource_url);
+			var request = (HttpWebRequest)WebRequest.Create(resource_url);
 			request.Headers.Add("Authorization", authHeader);
 			request.Method = "POST";
 			request.ContentType = "application/x-www-form-urlencoded";
