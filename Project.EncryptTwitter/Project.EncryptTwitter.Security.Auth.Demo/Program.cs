@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -15,7 +14,25 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 		{
 			//Test1();
 
-			TestUsingTweetSharp();
+			//TestUsingTweetSharp();
+
+			TestWithXAuth();
+		}
+
+		private static void TestWithXAuth()
+		{
+			// OAuth Access Token Exchange
+			TwitterService service = new TwitterService(OAuthProperties.ConsumerKey, OAuthProperties.ConsumerKeySecret);
+
+			Console.WriteLine("Enter Username...");
+			string username = Console.ReadLine();
+			Console.WriteLine("Enter Password...");
+			string password = Console.ReadLine();
+			OAuthAccessToken accessToken = service.GetAccessTokenWithXAuth(username, password);
+
+			service.AuthenticateWith(accessToken.Token, accessToken.TokenSecret);
+			var verifyCredentialsOptions = new VerifyCredentialsOptions {IncludeEntities = true};
+			TwitterUser user = service.VerifyCredentials(verifyCredentialsOptions);
 		}
 
 		private static void TestUsingTweetSharp()
