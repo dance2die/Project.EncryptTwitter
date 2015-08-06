@@ -16,10 +16,10 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 
 			//TestUsingTweetSharp();
 
-			TestWithXAuth();
+			TestWithTweetSharpXAuth();
 		}
 
-		private static void TestWithXAuth()
+		private static void TestWithTweetSharpXAuth()
 		{
 			// OAuth Access Token Exchange
 			TwitterService service = new TwitterService(OAuthProperties.ConsumerKey, OAuthProperties.ConsumerKeySecret);
