@@ -25,8 +25,16 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 			//TestWithTweetSharpXAuth();
 			//TestWithTweetinvi();
 
-			// http://stackoverflow.com/a/9212343/4035
-			AsyncContext.Run(() => XAuthTestWithLinqToTwitter());
+			//// http://stackoverflow.com/a/9212343/4035
+			//AsyncContext.Run(() => XAuthTestWithLinqToTwitter());
+
+			// Roll out my own XAuth...
+			TestWithCustomXAuth();
+		}
+
+		private static void TestWithCustomXAuth()
+		{
+			
 		}
 
 		private async static void XAuthTestWithLinqToTwitter()
