@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using LinqToTwitter;
+using Nito.AsyncEx;
 using Tweetinvi;
 using Tweetinvi.Core.Credentials;
 using TweetSharp;
 using Stream = System.IO.Stream;
+using User = Tweetinvi.User;
 
 namespace Project.EncryptTwitter.Security.Auth.Demo
 {
@@ -18,8 +23,63 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 			//Test1();
 			//TestUsingTweetSharp();
 			//TestWithTweetSharpXAuth();
-
 			//TestWithTweetinvi();
+
+			// http://stackoverflow.com/a/9212343/4035
+			AsyncContext.Run(() => XAuthTestWithLinqToTwitter());
+		}
+
+		private async static void XAuthTestWithLinqToTwitter()
+		{
+			Console.WriteLine("Enter User Name...");
+			string userName = Console.ReadLine();
+			Console.WriteLine("Enter Password...");
+			string password = Console.ReadLine();
+
+			var auth = new XAuthAuthorizer
+			{
+				CredentialStore = new XAuthCredentials
+				{
+					ConsumerKey = OAuthProperties.ConsumerKey,
+					ConsumerSecret = OAuthProperties.ConsumerKeySecret,
+					UserName = userName,
+					Password = password
+				}
+			};
+
+			try
+			{
+				await auth.AuthorizeAsync();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+
+			using (var twitterCtx = new TwitterContext(auth))
+			{
+				//Log
+				twitterCtx.Log = Console.Out;
+
+				List<LinqToTwitter.User> users =
+					(from	tweet in twitterCtx.User
+					 where	tweet.Type == UserType.Show 
+							&& tweet.ScreenName == "JoeMayo"
+					 select tweet)
+					.ToList();
+
+				users.ForEach(user =>
+				{
+					var status =
+						user.Protected || user.Status == null ?
+							"Status Unavailable" :
+							user.Status.Text;
+
+					Console.WriteLine(
+						"ID: {0}, Name: {1}\nLast Tweet: {2}\n",
+						user.UserID, user.ScreenName, status);
+				});
+			}
 		}
 
 		private static void TestWithTweetinvi()
