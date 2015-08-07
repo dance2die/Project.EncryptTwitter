@@ -4,7 +4,10 @@ using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using Tweetinvi;
+using Tweetinvi.Core.Credentials;
 using TweetSharp;
+using Stream = System.IO.Stream;
 
 namespace Project.EncryptTwitter.Security.Auth.Demo
 {
@@ -13,10 +16,27 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 		public static void Main(string[] args)
 		{
 			//Test1();
-
 			//TestUsingTweetSharp();
+			//TestWithTweetSharpXAuth();
 
-			TestWithTweetSharpXAuth();
+			//TestWithTweetinvi();
+		}
+
+		private static void TestWithTweetinvi()
+		{
+			// Set up your credentials (https://apps.twitter.com)
+			var twitterCredentials = new TwitterCredentials(
+				OAuthProperties.Token, OAuthProperties.TokenSecret, 
+				OAuthProperties.ConsumerKey, OAuthProperties.ConsumerKeySecret);
+
+			// Publish a tweet
+			Tweet.PublishTweet("@TweetinviApi rocks!");
+
+			// Get the details of the Logged User
+			var loggedUser = User.GetLoggedUser();
+
+			// Get my Home Timeline
+			var tweets = Timeline.GetHomeTimeline();
 		}
 
 		private static void TestWithTweetSharpXAuth()
@@ -84,7 +104,7 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 		private static HttpWebRequest GetTwitterWebRequest(string status)
 		{
 			var oauth_token = OAuthProperties.Token;
-			var oauth_token_secret = OAuthProperties.TokenSecrete;
+			var oauth_token_secret = OAuthProperties.TokenSecret;
 			var oauth_consumer_key = OAuthProperties.ConsumerKey;
 			var oauth_consumer_secret = OAuthProperties.ConsumerKeySecret;
 
