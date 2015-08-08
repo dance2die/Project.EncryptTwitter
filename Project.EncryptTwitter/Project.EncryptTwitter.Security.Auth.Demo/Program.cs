@@ -34,7 +34,7 @@ namespace Project.EncryptTwitter.Security.Auth.Demo
 
 		private static void TestWithCustomXAuth()
 		{
-			
+			Console.WriteLine("Test");
 		}
 
 		private async static void XAuthTestWithLinqToTwitter()
